@@ -27,7 +27,7 @@ dependencies {
   implementation(libs.ffmPlus)
   // testImplementation(libs.kala.collection)
   intellijPlatform {
-    intellijIdeaCommunity("2024.3")
+    intellijIdeaCommunity("2025.1")
     bundledPlugin("com.intellij.java")
     testFramework(TestFrameworkType.Platform)
   }
