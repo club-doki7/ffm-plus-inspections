@@ -1,0 +1,27 @@
+<idea-plugin>
+  <id>club.doki7.ffm-plus</id>
+  <name>FFM+ Inspections</name>
+  <vendor email="ice1000kotlin@gmail.com" url="https://ice1000.org">Tesla Zhang</vendor>
+
+  <description><![CDATA[
+    This plugin provides inspections for the 'FFM+' module of the Vulkan4j library for Java.<br/>
+    Once you import the (recent version of) Vulkan4j library,
+    this plugin will give you useful suggestions, such as method replacements,
+    equivalent-but-efficient conversion, etc.
+    ]]></description>
+
+  <change-notes><![CDATA[
+    Doki Doki!!!
+    ]]></change-notes>
+
+  <depends>com.intellij.modules.platform</depends>
+  <depends>com.intellij.modules.java</depends>
+
+  <extensions defaultExtensionNs="com.intellij">
+    <!--suppress PluginXmlValidity -->
+    <inspectionToolProvider implementation="club.doki7.ffm.FfmInspectionProvider"/>
+  </extensions>
+
+  <actions>
+  </actions>
+</idea-plugin>
