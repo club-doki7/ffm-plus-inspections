@@ -1,7 +1,5 @@
 package club.doki7.ffm;
 
-import club.doki7.ffm.annotation.Bitmask;
-import club.doki7.ffm.annotation.EnumType;
 import com.intellij.codeInsight.AnnotationUtil;
 import com.intellij.openapi.util.Comparing;
 import com.intellij.psi.*;
@@ -91,14 +89,14 @@ public final class FfmPlusMagicConstantUtils {
     var allowedValues = PsiAnnotationMemberValue.EMPTY_ARRAY;
     var flags = false;
     String qualifiedName = ffmPlus.getQualifiedName();
-    if (Bitmask.class.getName().equals(qualifiedName)) {
-      var values = readFromClass(null, ffmPlus, type, manager, context);
+    var values = readFromClass(null, ffmPlus, type, manager, context);
+    // if (Bitmask.class.getName().equals(qualifiedName)) {
+    if ("club.doki7.ffm.annotation.Bitmask".equals(qualifiedName)) {
       if (values != null) {
         allowedValues = values;
         flags = true;
       }
     } else /*if (EnumType.class.getName().equals(qualifiedName))*/ {
-      var values = readFromClass(null, ffmPlus, type, manager, context);
       if (values != null) allowedValues = values;
     }
 
@@ -236,8 +234,10 @@ public final class FfmPlusMagicConstantUtils {
           AllowedValues values = getAllowedValuesFromJB(type, annotation, manager, context);
           if (values != null) return values;
         }
-        if (Bitmask.class.getName().equals(annotation.getQualifiedName()) ||
-            EnumType.class.getName().equals(annotation.getQualifiedName())) {
+        // if (Bitmask.class.getName().equals(annotation.getQualifiedName()) ||
+        //     EnumType.class.getName().equals(annotation.getQualifiedName())) {
+        if ("club.doki7.ffm.annotation.Bitmask".equals(annotation.getQualifiedName()) ||
+            "club.doki7.ffm.annotation.EnumType".equals(annotation.getQualifiedName())) {
           return getAllowedValuesFromChuigda(type, annotation, manager, context);
         }
       }
