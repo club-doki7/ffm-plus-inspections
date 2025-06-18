@@ -60,6 +60,10 @@ public final class FfmPlusMagicConstantInspection extends AbstractBaseJavaLocalI
     return "FfmPlusMagicConstant";
   }
 
+  @Override public @Nls(capitalization = Nls.Capitalization.Sentence) @NotNull String getDisplayName() {
+    return FfmBundle.INSTANCE.message("ffm.magic-constant.name");
+  }
+
   @Override
   public @NotNull PsiElementVisitor buildVisitor(final @NotNull ProblemsHolder holder,
                                                  boolean isOnTheFly,
