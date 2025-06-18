@@ -57,7 +57,7 @@ public final class FfmPlusMagicConstantInspection extends AbstractBaseJavaLocalI
   }
 
   @Override public @NotNull String getShortName() {
-    return "FFM+ MagicConstant";
+    return "FfmPlusMagicConstant";
   }
 
   @Override
