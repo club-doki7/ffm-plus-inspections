@@ -1,5 +1,7 @@
 package club.doki7.ffm;
 
+import club.doki7.ffm.annotation.Bitmask;
+import club.doki7.ffm.annotation.EnumType;
 import com.intellij.codeInsight.AnnotationUtil;
 import com.intellij.openapi.util.Comparing;
 import com.intellij.psi.*;
@@ -22,10 +24,10 @@ import java.util.*;
 /// Modified from [MagicConstantUtils](https://github.com/JetBrains/intellij-community/blob/master/java/java-impl/src/com/intellij/codeInspection/magicConstant/MagicConstantUtils.java)
 /// Removed support for bean info, added support for {@link club.doki7.ffm.annotation.Bitmask} and {@link club.doki7.ffm.annotation.EnumType}
 public final class FfmPlusMagicConstantUtils {
-  private static AllowedValues getAllowedValuesFromMagic(@NotNull PsiType type,
-                                                         @NotNull PsiAnnotation magic,
-                                                         @NotNull PsiManager manager,
-                                                         @Nullable PsiElement context) {
+  private static AllowedValues getAllowedValuesFromJB(@NotNull PsiType type,
+                                                      @NotNull PsiAnnotation magic,
+                                                      @NotNull PsiManager manager,
+                                                      @Nullable PsiElement context) {
     PsiAnnotationMemberValue[] allowedValues = PsiAnnotationMemberValue.EMPTY_ARRAY;
     boolean values = false;
     boolean flags = false;
@@ -81,12 +83,35 @@ public final class FfmPlusMagicConstantUtils {
     return new AllowedValues(allowedValues, flags);
   }
 
-  private static PsiAnnotationMemberValue[] readFromClass(@NonNls @NotNull String attributeName,
+  private static AllowedValues getAllowedValuesFromChuigda(@NotNull PsiType type,
+                                                           @NotNull PsiAnnotation ffmPlus,
+                                                           @NotNull PsiManager manager,
+                                                           @Nullable PsiElement context) {
+    var allowedValues = PsiAnnotationMemberValue.EMPTY_ARRAY;
+    var flags = false;
+    String qualifiedName = ffmPlus.getQualifiedName();
+    if (Bitmask.class.getName().equals(qualifiedName)) {
+      var values = readFromClass(null, ffmPlus, type, manager, context);
+      if (values != null) {
+        allowedValues = values;
+        flags = true;
+      }
+    } else /*if (EnumType.class.getName().equals(qualifiedName))*/ {
+      var values = readFromClass(null, ffmPlus, type, manager, context);
+      if (values != null) allowedValues = values;
+    }
+
+    return new AllowedValues(allowedValues, flags);
+  }
+
+  /// @param attributeName null if it's just `values`
+  private static PsiAnnotationMemberValue[] readFromClass(@NonNls @Nullable String attributeName,
                                                           @NotNull PsiAnnotation magic,
                                                           @NotNull PsiType type,
                                                           @NotNull PsiManager manager,
                                                           @Nullable PsiElement context) {
-    PsiAnnotationMemberValue fromClassAttr = magic.findAttributeValue(attributeName);
+    // ice1000: modified to "Declared" since there are no default values for these attributes
+    PsiAnnotationMemberValue fromClassAttr = magic.findDeclaredAttributeValue(attributeName);
     PsiType fromClassType = fromClassAttr instanceof PsiClassObjectAccessExpression
         ? ((PsiClassObjectAccessExpression) fromClassAttr).getOperand().getType()
         : null;
@@ -205,9 +230,15 @@ public final class FfmPlusMagicConstantUtils {
     if (visited != null && visited.size() > 5) return null; // Avoid too deep traversal
     PsiManager manager = element.getManager();
     for (PsiAnnotation annotation : getAllAnnotations(element)) {
-      if (type != null && MagicConstant.class.getName().equals(annotation.getQualifiedName())) {
-        AllowedValues values = getAllowedValuesFromMagic(type, annotation, manager, context);
-        if (values != null) return values;
+      if (type != null) {
+        if (MagicConstant.class.getName().equals(annotation.getQualifiedName())) {
+          AllowedValues values = getAllowedValuesFromJB(type, annotation, manager, context);
+          if (values != null) return values;
+        }
+        if (Bitmask.class.getName().equals(annotation.getQualifiedName()) ||
+            EnumType.class.getName().equals(annotation.getQualifiedName())) {
+          return getAllowedValuesFromChuigda(type, annotation, manager, context);
+        }
       }
 
       PsiClass aClass = annotation.resolveAnnotationType();
