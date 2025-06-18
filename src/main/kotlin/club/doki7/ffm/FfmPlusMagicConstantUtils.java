@@ -5,6 +5,7 @@ import club.doki7.ffm.annotation.EnumType;
 import com.intellij.codeInsight.AnnotationUtil;
 import com.intellij.openapi.util.Comparing;
 import com.intellij.psi.*;
+import com.intellij.psi.controlFlow.ControlFlowUtil;
 import com.intellij.psi.impl.JavaConstantExpressionEvaluator;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.util.*;
@@ -263,7 +264,7 @@ public final class FfmPlusMagicConstantUtils {
         }
         if (target != null) {
           PsiElement block = PsiUtil.getVariableCodeBlock(localVariable, null);
-          if (block != null /*&& ControlFlowUtil.isEffectivelyFinal(localVariable, block)*/) {
+          if (block != null && ControlFlowUtil.isEffectivelyFinal(localVariable, block)) {
             if (visited == null) visited = new HashSet<>();
             if (visited.add(target)) {
               return getAllowedValues(target, type, context, visited);

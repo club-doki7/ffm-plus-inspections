@@ -12,12 +12,8 @@ import java.util.*
 
 class FfmInspectionProvider : InspectionToolProvider {
   override fun getInspectionClasses(): Array<Class<out LocalInspectionTool>> = arrayOf(
+    FfmPlusMagicConstantInspection::class.java,
   )
-}
-
-abstract class FfmInspection : LocalInspectionTool() {
-  override fun isEnabledByDefault() = true
-  final override fun getGroupDisplayName() = FfmBundle.message("ffm.group.name")
 }
 
 object FfmBundle {
