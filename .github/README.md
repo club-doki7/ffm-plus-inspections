@@ -1,10 +1,8 @@
 # Inspections for FFM+
 
 [![Build](https://github.com/club-doki7/ffm-plus-inspections/actions/workflows/build.yml/badge.svg)](https://github.com/club-doki7/ffm-plus-inspections/actions/workflows/build.yml)
-[![JB Version](https://img.shields.io/jetbrains/plugin/v/27683)][jb]
-[![JB Downloads](https://img.shields.io/jetbrains/plugin/d/27683)][jb]
-
-jb: https://plugins.jetbrains.com/plugin/27683
+[![JB Version](https://img.shields.io/jetbrains/plugin/v/27683)](https://plugins.jetbrains.com/plugin/27683)
+[![JB Downloads](https://img.shields.io/jetbrains/plugin/d/27683)](https://plugins.jetbrains.com/plugin/27683)
 
 This is created for the FFM+ module of [vulkan4j](https://github.com/club-doki7/vulkan4j).
 
