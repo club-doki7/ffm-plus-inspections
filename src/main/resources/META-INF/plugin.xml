@@ -19,6 +19,9 @@
 
   <extensions defaultExtensionNs="com.intellij">
     <inspectionToolProvider implementation="club.doki7.ffm.FfmInspectionProvider"/>
+    <completion.contributor
+      language="JAVA"
+      implementationClass="club.doki7.ffm.FfmPlusMagicCompletionContributor"/>
   </extensions>
 
   <actions>

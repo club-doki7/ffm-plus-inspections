@@ -1,10 +1,10 @@
 [versions]
 # libraries
 # https://repo1.maven.org/maven2/club/doki7/ffm-plus/
-ffmPlus = "0.2.3"
+ffmPlus = "0.2.7"
 
 # plugins
-kotlin = "2.1.20-RC3"
+kotlin = "2.2.10"
 gradleIntelliJPlugin = "2.6.0"
 
 [libraries]
