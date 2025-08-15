@@ -12,13 +12,12 @@
 
   <change-notes><![CDATA[
     Doki Doki!!!
-    ]]></change-notes>
+  ]]></change-notes>
 
   <depends>com.intellij.modules.platform</depends>
   <depends>com.intellij.modules.java</depends>
 
   <extensions defaultExtensionNs="com.intellij">
-    <!--suppress PluginXmlValidity -->
     <inspectionToolProvider implementation="club.doki7.ffm.FfmInspectionProvider"/>
   </extensions>
 
