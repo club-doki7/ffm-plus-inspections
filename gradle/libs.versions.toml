@@ -4,8 +4,8 @@
 ffmPlus = "0.2.7"
 
 # plugins
-kotlin = "2.2.10"
-gradleIntelliJPlugin = "2.6.0"
+kotlin = "2.2.21"
+gradleIntelliJPlugin = "2.10.2"
 
 [libraries]
 ffmPlus = { group = "club.doki7", name = "ffm-plus", version.ref = "ffmPlus" }
